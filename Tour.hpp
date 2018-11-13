@@ -4,6 +4,7 @@
 
 #ifndef GENETICALGORITHM_TOUR_HPP
 #define GENETICALGORITHM_TOUR_HPP
+#define CITIES_IN_TOUR 32
 
 #include <vector>
 #include "City.hpp"
@@ -17,8 +18,13 @@ private:
 
 public:
     Tour();
-    Tour(Tour& tour) = default;
+    Tour(Tour& other) = default;
     ~Tour() = default;
+    void shuffle_cities();
+    double get_tour_distance();
+    double determine_fitness();
+    void mutate();
+    bool contains_city(City& city);
 };
 
 

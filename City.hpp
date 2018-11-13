@@ -4,6 +4,7 @@
 
 #ifndef GENETICALGORITHM_CITY_HPP
 #define GENETICALGORITHM_CITY_HPP
+#define MAP_BOUNDARY 1000
 
 #include <string>
 
@@ -18,8 +19,9 @@ private:
 public:
     static long count;
     City();
-    City(City& city) = default;
+    City(City& other) = default;
     ~City() = default;
+    double get_distance_between_cities(City& other);
 };
 
 

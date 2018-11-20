@@ -12,16 +12,17 @@ using namespace std;
 
 class City {
 private:
-    string name;
+    unsigned long id;
     double x;
     double y;
 
 public:
-    static long count;
+    static unsigned long count;
     City();
     City(City& other) = default;
     ~City() = default;
     double get_distance_between_cities(City& other);
+    bool operator == (City& other);
 };
 
 

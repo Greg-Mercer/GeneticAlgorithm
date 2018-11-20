@@ -7,7 +7,7 @@
 
 
 
-long City::count = 1;
+unsigned long City::count = 1;
 
 City::City() {
     mt19937 rng;
@@ -17,6 +17,14 @@ City::City() {
 
     this->x = dist(re);
     this->y = dist(re);
+    this->id = count;
     count++;
-    // todo: generate random city name
+}
+
+double City::get_distance_between_cities(City &other) {
+    return ((this->x - other.x) + (this->y - other.y));
+}
+
+bool City::operator==(City &other) {
+    return this->id == other.id;
 }

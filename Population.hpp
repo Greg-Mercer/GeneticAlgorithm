@@ -5,21 +5,28 @@
 #ifndef GENETICALGORITHM_POPULATION_HPP
 #define GENETICALGORITHM_POPULATION_HPP
 #define POPULATION_SIZE 32
+#define ITERATIONS 1000
 
-
-#include <queue>
+#include <vector>
 #include "Tour.hpp"
+
 
 class Population {
 private:
-    priority_queue<Tour> population;
+    vector<Tour> population;
     double base_distance;
     double best_distance;
     double improvement_factor;
+    double number_of_elites;
 
 public:
+    void start();
+    void generate_population();
+    void select_elites();
+    void sga();
     vector<Tour> select_parents();
     Tour crossover();
+    void report();
 };
 
 

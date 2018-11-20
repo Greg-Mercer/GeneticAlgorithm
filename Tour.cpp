@@ -64,3 +64,7 @@ void Tour::generate_cities() {
     }
 
 }
+
+bool Tour::operator<(Tour &other) {
+    return this->fitness < other.fitness;
+}

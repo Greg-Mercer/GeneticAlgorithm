@@ -6,6 +6,7 @@
 #define GENETICALGORITHM_POPULATION_HPP
 #define POPULATION_SIZE 32
 #define ITERATIONS 1000
+#define NUMBER_OF_ELITES 1
 
 #include <vector>
 #include "Tour.hpp"
@@ -17,11 +18,10 @@ private:
     double base_distance;
     double best_distance;
     double improvement_factor;
-    double number_of_elites;
 
 public:
+    Population();
     void start();
-    void generate_population();
     void select_elites();
     void sga();
     vector<Tour> select_parents();

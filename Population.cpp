@@ -4,10 +4,13 @@
 
 #include "Population.hpp"
 
+Population::Population() {
+    for(int i = 0; i < POPULATION_SIZE; i++) {
+        population.emplace_back(Tour{});
+    }
+}
 
 void Population::start() {
-
-    generate_population();
 
     unsigned long i = 0;
     while(best_distance / base_distance < improvement_factor || i < ITERATIONS) {
@@ -18,13 +21,20 @@ void Population::start() {
 
 }
 
-void Population::generate_population() {
-
-}
-
-
 void Population::select_elites() {
-
+    for(unsigned long i = 0; i < NUMBER_OF_ELITES; i++) {
+        Tour& elite = population.at(i);
+        unsigned long elite_index = i;
+        for(unsigned long j = 0; j < POPULATION_SIZE; j++) {
+            if(elite < population.at(j)) {
+                elite = population.at(j);
+                elite_index = j;
+            }
+        }
+        Tour& temp = population.at(i);
+        population.insert(population.begin() + i, elite);
+        population.insert(population.begin() + elite_index, temp);
+    }
 }
 
 void Population::sga() {
@@ -36,7 +46,7 @@ void Population::sga() {
 
 vector<Tour> Population::select_parents() {
 
-    for(unsigned long i = 0; i < number_of_elites; i++) {
+    for(unsigned long i = NUMBER_OF_ELITES; i < POPULATION_SIZE; i++) {
         population.at(i).mutate();
     }
 
@@ -51,4 +61,3 @@ Tour Population::crossover() {
 void Population::report() {
 
 }
-

@@ -28,6 +28,7 @@ public:
     bool contains_city(City& city);
     static vector<City> cities;
     static void generate_cities();
+    bool operator < (Tour& other);
 };
 
 

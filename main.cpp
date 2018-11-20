@@ -5,5 +5,7 @@ int main() {
 
     Population p{};
 
+    p.start();
+
     return 0;
 }

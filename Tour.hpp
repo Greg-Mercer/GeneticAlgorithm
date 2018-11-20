@@ -5,7 +5,7 @@
 #ifndef GENETICALGORITHM_TOUR_HPP
 #define GENETICALGORITHM_TOUR_HPP
 #define CITIES_IN_TOUR 32
-#define FITNESS_SCALAR 10000
+#define FITNESS_SCALAR 100000
 
 #include <vector>
 #include "City.hpp"

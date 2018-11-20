@@ -12,6 +12,9 @@ Population::Population() {
 
 void Population::start() {
 
+    select_elites();
+    base_distance = best_distance;
+
     unsigned long i = 0;
     while(best_distance / base_distance < improvement_factor || i < ITERATIONS) {
         sga();
@@ -32,9 +35,10 @@ void Population::select_elites() {
             }
         }
         Tour& temp = population.at(i);
-        population.insert(population.begin() + i, elite);
-        population.insert(population.begin() + elite_index, temp);
+        population.at(i) = elite;
+        population.at(elite_index) = temp;
     }
+    best_distance = population.at(0).get_tour_distance();
 }
 
 void Population::sga() {

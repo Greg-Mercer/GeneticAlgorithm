@@ -8,14 +8,13 @@
 
 using namespace std;
 
+vector<City> Tour::cities = Tour::generate_cities();
+
 Tour::Tour() {
 
-    if(cities.empty()) {
-        generate_cities();
-    }
     vector<City> temp = cities;
 
-    auto rng = default_random_engine{};
+    auto rng = default_random_engine{random_device()()};
     shuffle(begin(temp), end(temp), rng);
     tour = temp;
 
@@ -31,7 +30,7 @@ double Tour::get_tour_distance() {
     // sum distances between cities in tour
     double distance = 0;
     for(unsigned long i = 1; i < CITIES_IN_TOUR; i++) {
-        distance += tour.at(i).get_distance_between_cities(tour.at(i + 1));
+        distance += tour.at(i).get_distance_between_cities(tour.at(i - 1));
     }
 
     // add distance back to original city
@@ -47,6 +46,7 @@ double Tour::determine_fitness() {
 
 void Tour::mutate() {
 
+    fitness = determine_fitness();
 }
 
 bool Tour::contains_city(City &city) {
@@ -57,12 +57,12 @@ bool Tour::contains_city(City &city) {
     return false;
 }
 
-void Tour::generate_cities() {
-
+vector<City> Tour::generate_cities() {
+    vector<City> temp;
     for(int i = 0; i < CITIES_IN_TOUR; i++) {
-        cities.emplace_back(City{});
+        temp.emplace_back(City{});
     }
-
+    return temp;
 }
 
 bool Tour::operator<(Tour &other) {

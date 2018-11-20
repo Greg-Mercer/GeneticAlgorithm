@@ -1,6 +1,9 @@
 #include <iostream>
+#include "Population.hpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
+    Population p{};
+
     return 0;
 }

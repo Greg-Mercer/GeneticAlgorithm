@@ -10,9 +10,8 @@
 unsigned long City::count = 1;
 
 City::City() {
-    mt19937 rng;
     default_random_engine re;
-    rng.seed(random_device()());
+    re.seed(random_device()());
     uniform_real_distribution<double> dist(0.00, MAP_BOUNDARY);
 
     this->x = dist(re);
@@ -22,7 +21,7 @@ City::City() {
 }
 
 double City::get_distance_between_cities(City &other) {
-    return ((this->x - other.x) + (this->y - other.y));
+    return sqrt(pow((this->x - other.x), 2) + pow((this->y - other.y), 2));
 }
 
 bool City::operator==(City &other) {

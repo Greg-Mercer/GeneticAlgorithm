@@ -19,7 +19,7 @@ private:
 public:
     static unsigned long count;
     City();
-    City(City& other) = default;
+    City(const City& other) = default;
     ~City() = default;
     double get_distance_between_cities(City& other);
     bool operator == (City& other);

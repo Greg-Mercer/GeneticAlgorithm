@@ -21,10 +21,6 @@ Tour::Tour() {
     fitness = determine_fitness();
 }
 
-void Tour::shuffle_cities() {
-
-}
-
 double Tour::get_tour_distance() {
 
     // sum distances between cities in tour
@@ -45,6 +41,30 @@ double Tour::determine_fitness() {
 }
 
 void Tour::mutate() {
+
+    default_random_engine re;
+    re.seed(random_device()());
+    uniform_real_distribution<float> dist(0.00, 1.00);
+
+    for(unsigned long i = 0; i < CITIES_IN_TOUR; i++) {
+        float mutation_val = dist(re);
+        if(mutation_val < MUTATION_RATE) {
+            bool swap_with_prev = (dist(re) > 0.50);
+            if(swap_with_prev) {
+                if(i != 0) {
+                    City temp = tour.at(i);
+                    tour.at(i) = tour.at(i - 1);
+                    tour.at(i - 1) = temp;
+                }
+            } else {
+                if(i != CITIES_IN_TOUR - 1) {
+                    City temp = tour.at(i);
+                    tour.at(i) = tour.at(i + 1);
+                    tour.at(i + 1) = temp;
+                }
+            }
+        }
+    }
 
     fitness = determine_fitness();
 }
@@ -67,4 +87,32 @@ vector<City> Tour::generate_cities() {
 
 bool Tour::operator<(Tour &other) {
     return this->fitness < other.fitness;
+}
+
+void Tour::crossover(vector<Tour> parents) {
+    Tour child;
+    unsigned long index = 0;
+
+    for(unsigned long i = 1; i < parents.size(); i++) {
+        default_random_engine re;
+        re.seed(random_device()());
+        uniform_int_distribution<unsigned long> dist(index, CITIES_IN_TOUR);
+        index = dist(re);
+
+        for(unsigned long j = 0; j < index; j++) {
+            City curr = parents.at(i - 1).tour.at(j);
+            if(!child.contains_city(curr)) {
+                child.tour.at(j) = curr;
+            }
+        }
+    }
+
+    for(unsigned long i = 0; i < CITIES_IN_TOUR; i++) {
+        City curr = parents.at(parents.size() - 1).tour.at(i);
+        if(!child.contains_city(curr)) {
+            child.tour.emplace_back(curr);
+        }
+    }
+
+    this->tour = child.tour;
 }

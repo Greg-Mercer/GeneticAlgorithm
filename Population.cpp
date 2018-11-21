@@ -3,6 +3,10 @@
 //
 
 #include "Population.hpp"
+#include <random>
+#include <iostream>
+
+using namespace std;
 
 Population::Population() {
     for(int i = 0; i < POPULATION_SIZE; i++) {
@@ -16,6 +20,8 @@ void Population::start() {
     base_distance = best_distance;
 
     unsigned long i = 0;
+    improvement_factor = 1.05;
+
     while(best_distance / base_distance < improvement_factor || i < ITERATIONS) {
         sga();
         report();
@@ -46,9 +52,6 @@ void Population::sga() {
     select_elites();
 
     crossover();
-}
-
-vector<Tour> Population::select_parents() {
 
     for(unsigned long i = NUMBER_OF_ELITES; i < POPULATION_SIZE; i++) {
         population.at(i).mutate();
@@ -56,12 +59,44 @@ vector<Tour> Population::select_parents() {
 
 }
 
-Tour Population::crossover() {
+vector<Tour> Population::select_parents() {
 
-    select_parents();
+    vector<Tour> parents;
+
+    for(int i = NUMBER_OF_ELITES; i < NUMBER_OF_PARENTS; i++) {
+        vector<Tour> pool;
+
+        // add random tours to pool. not necessarily distinct.
+        for(int j = 0; j < PARENT_POOL_SIZE; j++) {
+            default_random_engine re;
+            re.seed(random_device()());
+            uniform_int_distribution<unsigned long> dist(NUMBER_OF_ELITES, POPULATION_SIZE - 1);
+            pool.emplace_back(population.at(dist(re)));
+        }
+
+        // extract fittest tours from pool and add to parent list
+        Tour& fittest = pool.at(0);
+        for(unsigned long j = 0; j < pool.size(); j++) {
+            if(fittest < pool.at(j)) {
+                fittest = pool.at(j);
+            }
+        }
+        parents.emplace_back(fittest);
+    }
+    return parents;
+}
+
+void Population::crossover() {
+
+    for(unsigned long i = NUMBER_OF_ELITES; i < POPULATION_SIZE; i++) {
+        vector<Tour> parents = select_parents();
+        population.at(i).crossover(parents);
+    }
 
 }
 
 void Population::report() {
+
+    cout << "Best distance so far: " << best_distance << endl;
 
 }

@@ -7,6 +7,8 @@
 #define POPULATION_SIZE 32
 #define ITERATIONS 1000
 #define NUMBER_OF_ELITES 1
+#define NUMBER_OF_PARENTS 2
+#define PARENT_POOL_SIZE 5
 
 #include <vector>
 #include "Tour.hpp"
@@ -25,7 +27,7 @@ public:
     void select_elites();
     void sga();
     vector<Tour> select_parents();
-    Tour crossover();
+    void crossover();
     void report();
 };
 

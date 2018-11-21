@@ -6,6 +6,7 @@
 #define GENETICALGORITHM_TOUR_HPP
 #define CITIES_IN_TOUR 32
 #define FITNESS_SCALAR 100000
+#define MUTATION_RATE 0.15
 
 #include <vector>
 #include "City.hpp"
@@ -21,7 +22,6 @@ public:
     Tour();
     Tour(const Tour& other) = default;
     ~Tour() = default;
-    void shuffle_cities();
     double get_tour_distance();
     double determine_fitness();
     void mutate();
@@ -29,6 +29,7 @@ public:
     static vector<City> cities;
     static vector<City> generate_cities();
     bool operator < (Tour& other);
+    void crossover (vector<Tour> parents);
 };
 
 

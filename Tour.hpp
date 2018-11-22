@@ -1,3 +1,5 @@
+#include <utility>
+
 //
 // Created by Greg on 2018-11-11.
 //
@@ -44,7 +46,7 @@ public:
      * Constructs a Tour with a given tour path.
      * @param start the tour to set
      */
-    Tour(vector<City> start) : tour(start) {};
+    Tour(vector<City> start) : tour(std::move(start)) {};
 
     /**
      * Standard copy constructor for Tour.

@@ -52,13 +52,13 @@ void Population::select_elites() {
 
 void Population::sga() {
 
-    select_elites();
-
     crossover();
 
     for(unsigned long i = NUMBER_OF_ELITES; i < POPULATION_SIZE; i++) {
         population.at(i).mutate();
     }
+
+    select_elites();
 
 }
 

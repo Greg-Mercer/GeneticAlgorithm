@@ -90,10 +90,12 @@ bool Tour::operator<(Tour &other) {
 }
 
 void Tour::crossover(vector<Tour> parents) {
-    vector<City> empty(CITIES_IN_TOUR, 1);
-    Tour child{empty};
+    // creates placeholder cities to populate child (cities with invalid ids)
+    vector<City> placeholder(CITIES_IN_TOUR, PLACEHOLDER_CITY);
+    Tour child{placeholder};
     unsigned long index = 0;
 
+    // populate child with parent cities up to index
     for(unsigned long i = 1; i < parents.size(); i++) {
         default_random_engine re;
         re.seed(random_device()());
@@ -108,9 +110,10 @@ void Tour::crossover(vector<Tour> parents) {
         }
     }
 
-    // remove all empty cities
+    // remove all placeholder cities
     for(unsigned long i = 0; i < CITIES_IN_TOUR; i++) {
-        if(child.tour.at(i).getId() == -1) {
+        auto flag = (unsigned long) -1;
+        if(child.tour.at(i).getId() == flag) {
             vector<City>::const_iterator first = child.tour.begin();
             vector<City>::const_iterator last = child.tour.begin() + i;
             child = vector<City>(first, last);
@@ -118,6 +121,7 @@ void Tour::crossover(vector<Tour> parents) {
         }
     }
 
+    // add remaining cities
     for(unsigned long i = 0; i < CITIES_IN_TOUR; i++) {
         City curr = parents.at(parents.size() - 1).tour.at(i);
         if(!child.contains_city(curr)) {
@@ -125,5 +129,6 @@ void Tour::crossover(vector<Tour> parents) {
         }
     }
 
+    // save fitness evaluation until after mutation
     this->tour = child.tour;
 }

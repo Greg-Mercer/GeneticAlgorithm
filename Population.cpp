@@ -79,9 +79,9 @@ vector<Tour> Population::select_parents() {
 
         // extract fittest tours from pool and add to parent list
         Tour& fittest = pool.at(0);
-        for(unsigned long j = 0; j < pool.size(); j++) {
-            if(fittest < pool.at(j)) {
-                fittest = pool.at(j);
+        for(Tour t : pool) {
+            if(fittest < t) {
+                fittest = t;
             }
         }
         parents.emplace_back(fittest);

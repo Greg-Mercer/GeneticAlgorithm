@@ -5,8 +5,6 @@
 #include <random>
 #include "City.hpp"
 
-
-
 unsigned long City::count = 1;
 
 City::City() {

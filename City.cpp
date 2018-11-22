@@ -6,6 +6,7 @@
 #include "City.hpp"
 
 unsigned long City::count = 1;
+double City::MAP_BOUNDARY = 1000;
 
 City::City() {
     default_random_engine re;

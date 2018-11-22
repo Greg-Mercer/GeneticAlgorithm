@@ -9,6 +9,8 @@
 using namespace std;
 
 vector<City> Tour::cities = Tour::generate_cities();
+unsigned long Tour::CITIES_IN_TOUR = 32;
+double Tour::MUTATION_RATE = 0.15;
 
 Tour::Tour() {
 
@@ -79,7 +81,7 @@ bool Tour::contains_city(City &city) {
 
 vector<City> Tour::generate_cities() {
     vector<City> temp;
-    for(int i = 0; i < CITIES_IN_TOUR; i++) {
+    for(unsigned long i = 0; i < CITIES_IN_TOUR; i++) {
         temp.emplace_back(City{});
     }
     return temp;

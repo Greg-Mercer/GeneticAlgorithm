@@ -4,7 +4,6 @@
 
 #ifndef GENETICALGORITHM_CITY_HPP
 #define GENETICALGORITHM_CITY_HPP
-#define MAP_BOUNDARY 1000
 
 #include <string>
 
@@ -20,6 +19,7 @@ private:
     double y; // the y coordinate of this city
 
 public:
+    static double MAP_BOUNDARY; // the coordinate limit within which cities can generate
     /**
      * Counter for city Id.
      */

@@ -6,9 +6,7 @@
 
 #ifndef GENETICALGORITHM_TOUR_HPP
 #define GENETICALGORITHM_TOUR_HPP
-#define CITIES_IN_TOUR 32
 #define FITNESS_SCALAR 100000
-#define MUTATION_RATE 0.15
 #define PLACEHOLDER_CITY -1
 
 #include <vector>
@@ -26,6 +24,8 @@ private:
     double fitness; // the fitness of this tour
 
 public:
+    static unsigned long CITIES_IN_TOUR; // number of cities in a tour
+    static double MUTATION_RATE; // rate at which cities mutate
     /**
      * The cities for all tours.
      */

@@ -8,28 +8,38 @@
 
 using namespace std;
 
+double Population::IMPROVEMENT_FACTOR = 1.75;
+unsigned long Population::POPULATION_SIZE = 32;
+unsigned long Population::ITERATIONS = 1000;
+unsigned long Population::NUMBER_OF_ELITES = 1;
+unsigned long Population::NUMBER_OF_PARENTS = 2;
+unsigned long Population::PARENT_POOL_SIZE = 5;
+
 Population::Population() {
-    for(int i = 0; i < POPULATION_SIZE; i++) {
+    for(unsigned int i = 0; i < POPULATION_SIZE; i++) {
         population.emplace_back(Tour{});
     }
+
+    select_elites();
+    base_distance = best_distance;
 }
 
 void Population::start() {
 
-    select_elites();
-    base_distance = best_distance;
-
     unsigned long i = 0;
-    improvement_factor = 1.8;
     double current_improvement = 1;
 
-    while(current_improvement < improvement_factor && i < ITERATIONS) {
+    while(current_improvement < IMPROVEMENT_FACTOR || i < ITERATIONS) {
         sga();
         report();
         i++;
         current_improvement = base_distance / best_distance;
         cout << i << ", improvement=" << current_improvement << endl;
     }
+
+    cout << endl << "Final results: " << endl;
+    cout << "Base distance: " << base_distance << ", best distance: " << best_distance
+    << ", iterations: " << i << ", improvement factor reached: " << current_improvement << endl;
 
 }
 
@@ -66,11 +76,11 @@ vector<Tour> Population::select_parents() {
 
     vector<Tour> parents;
 
-    for(int i = 0; i < NUMBER_OF_PARENTS; i++) {
+    for(unsigned int i = 0; i < NUMBER_OF_PARENTS; i++) {
         vector<Tour> pool;
 
         // add random tours to pool. not necessarily distinct.
-        for(int j = 0; j < PARENT_POOL_SIZE; j++) {
+        for(unsigned int j = 0; j < PARENT_POOL_SIZE; j++) {
             default_random_engine re;
             re.seed(random_device()());
             uniform_int_distribution<unsigned long> dist(NUMBER_OF_ELITES, POPULATION_SIZE - 1);

@@ -1,11 +1,9 @@
 #include <iostream>
-#include "Population.hpp"
+#include "Interface.hpp"
 
 int main() {
 
-    Population p{};
-
-    p.start();
+    Interface i{};
 
     return 0;
 }

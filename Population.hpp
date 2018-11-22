@@ -4,11 +4,6 @@
 
 #ifndef GENETICALGORITHM_POPULATION_HPP
 #define GENETICALGORITHM_POPULATION_HPP
-#define POPULATION_SIZE 32
-#define ITERATIONS 1000
-#define NUMBER_OF_ELITES 1
-#define NUMBER_OF_PARENTS 2
-#define PARENT_POOL_SIZE 5
 
 #include <vector>
 #include "Tour.hpp"
@@ -21,9 +16,15 @@ private:
     vector<Tour> population; // a population of tours
     double base_distance; // the distance of the first elite tour
     double best_distance; // the distance of the current elite tour
-    double improvement_factor; // the rate of improvement we want the algorithm to achieve
 
 public:
+    static double IMPROVEMENT_FACTOR; // the rate of improvement we want the algorithm to achieve
+    static unsigned long POPULATION_SIZE; // size of this population
+    static unsigned long ITERATIONS; // number of iterations for the genetic algorithm
+    static unsigned long NUMBER_OF_ELITES; // number of elites for the genetic algorithm
+    static unsigned long NUMBER_OF_PARENTS; // number of parents to use for crossover
+    static unsigned long PARENT_POOL_SIZE; // the size of the pool of parents
+
     /**
      * Constructs a population with randomly generated tours.
      */

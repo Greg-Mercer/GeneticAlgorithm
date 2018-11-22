@@ -90,7 +90,8 @@ bool Tour::operator<(Tour &other) {
 }
 
 void Tour::crossover(vector<Tour> parents) {
-    Tour child;
+    vector<City> empty(CITIES_IN_TOUR, 1);
+    Tour child{empty};
     unsigned long index = 0;
 
     for(unsigned long i = 1; i < parents.size(); i++) {
@@ -104,6 +105,16 @@ void Tour::crossover(vector<Tour> parents) {
             if(!child.contains_city(curr)) {
                 child.tour.at(j) = curr;
             }
+        }
+    }
+
+    // remove all empty cities
+    for(unsigned long i = 0; i < CITIES_IN_TOUR; i++) {
+        if(child.tour.at(i).getId() == -1) {
+            vector<City>::const_iterator first = child.tour.begin();
+            vector<City>::const_iterator last = child.tour.begin() + i;
+            child = vector<City>(first, last);
+            break;
         }
     }
 

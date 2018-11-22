@@ -20,6 +20,7 @@ private:
 
 public:
     Tour();
+    Tour(vector<City> start) : tour(start) {};
     Tour(const Tour& other) = default;
     ~Tour() = default;
     double get_tour_distance();

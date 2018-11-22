@@ -20,12 +20,15 @@ void Population::start() {
     base_distance = best_distance;
 
     unsigned long i = 0;
-    improvement_factor = 1.05;
+    improvement_factor = 1.8;
+    double current_improvement = 1;
 
-    while(best_distance / base_distance < improvement_factor || i < ITERATIONS) {
+    while(current_improvement < improvement_factor && i < ITERATIONS) {
         sga();
         report();
         i++;
+        current_improvement = base_distance / best_distance;
+        cout << i << ", improvement=" << current_improvement << endl;
     }
 
 }
@@ -63,7 +66,7 @@ vector<Tour> Population::select_parents() {
 
     vector<Tour> parents;
 
-    for(int i = NUMBER_OF_ELITES; i < NUMBER_OF_PARENTS; i++) {
+    for(int i = 0; i < NUMBER_OF_PARENTS; i++) {
         vector<Tour> pool;
 
         // add random tours to pool. not necessarily distinct.

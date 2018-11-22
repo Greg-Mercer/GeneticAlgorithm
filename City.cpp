@@ -27,3 +27,7 @@ double City::get_distance_between_cities(City &other) {
 bool City::operator==(City &other) {
     return this->id == other.id;
 }
+
+unsigned long City::getId() const {
+    return id;
+}
